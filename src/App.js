@@ -9,7 +9,6 @@ import SearchResults from './pages/SearchResults/SearchResults';
 import AboutUs from './pages/AboutUs/AboutUs';
 import { CartItemContextProvider } from './contexts/cartItemContext';
 import CategoryResults from './pages/CategoryResults/CategoryResults';
-import Slider from './components/Slider/Slider';
 
 
 const App = () => {
@@ -17,7 +16,7 @@ const App = () => {
     <CartItemContextProvider>
     <CartProvider>
       <SearchProvider>
-        <Router>
+        <Router basename='/Ecommerce'>
           <SearchConsumer>
             {({ handleSearch }) => (
               <Navbar onSearch={handleSearch}/>

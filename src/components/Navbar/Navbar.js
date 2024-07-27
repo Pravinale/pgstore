@@ -4,7 +4,7 @@ import './Navbar.css';
 import { CartContext } from '../../contexts/showCartContext';
 import { CartItemContext } from '../../contexts/cartItemContext';
 import { SearchContext } from '../../contexts/searchContext';
-import { FaCartShopping } from 'react-icons/fa6';
+import { FaCartShopping, FaBars  } from 'react-icons/fa6';
 import Logo from '../../assets/logo.png'
 
 const Navbar = () => {
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [searchInput, setSearchInput] = useState('');
   const { handleSearch } = useContext(SearchContext);
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
@@ -30,6 +31,10 @@ const Navbar = () => {
     if (e.key === 'Enter') {
       handleSearchClick();
     }
+  };
+
+  const handleMenuToggle = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
@@ -50,12 +55,13 @@ const Navbar = () => {
         </div>
 
         <div className='right-nav'>
-          <div className='navlinks'>
+          <div className={`navlinks ${menuOpen ? 'show' : ''}`}>
             <li><Link to='./'>Home</Link></li>
             <li><Link to='./about'>About Us</Link></li>
           </div>
-          <div className='nav-icon'>
-            <h1>#</h1>
+
+          <div className='mobile-menu-icon' onClick={handleMenuToggle}>
+            <FaBars />
           </div>
 
           <div className='cart-icon'>
@@ -65,8 +71,15 @@ const Navbar = () => {
             </button>
             
           </div>
+
         </div>
       </div>
+      {menuOpen && (
+        <div className='mobile-nav'>
+          <li><Link to='./' onClick={handleMenuToggle}>Home</Link></li>
+          <li><Link to='./about' onClick={handleMenuToggle}>About Us</Link></li>
+        </div>
+      )}
     </>
   );
 };
