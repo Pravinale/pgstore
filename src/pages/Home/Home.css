@@ -179,7 +179,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr); 
   gap: 1rem;
-  justify-content: center;
+  justify-items: center;
 }
 
 .popular-product-section h1{
@@ -230,6 +230,12 @@
     padding: 0rem 1rem 0rem 1rem;
 
   }
+  .home-content{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
   .top-sell-products{
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
@@ -240,7 +246,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
     gap: 1rem;
-    justify-content: center;
+    justify-items: center;
   }
 
   .all-products{

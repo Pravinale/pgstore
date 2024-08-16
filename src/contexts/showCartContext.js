@@ -5,7 +5,7 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
     const [showCart, setShowCart] = useState(false);
 
-    const toggleCart = () => {
+    const toggleCart = (e) => {
         setShowCart(!showCart)
     };
 
