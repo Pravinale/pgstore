@@ -25,11 +25,13 @@ const Cart = () => {
           <i><FaRectangleXmark/></i>
         </div> 
       </div>
+
       <div className='cart-body'>
         {cartItems.map(item => (
           <CartSingleProduct key={item.id} item={item}/>
         ))}
       </div>
+      
       <div className='cart-footer'>
         <div className='grand-total'>
           <h1>Grand Total:</h1>
