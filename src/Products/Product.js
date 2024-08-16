@@ -5,12 +5,18 @@ import { CartItemContext } from '../contexts/cartItemContext';
 
 const Product = (props) => {
 
-    const {id, title, price, image} = props.propsData
+    const {id, title, price, image, stock } = props.propsData
     const { addToCart } = useContext(CartItemContext);
 
+    // const handleAddToCart = () => {
+    //     addToCart({ id, title, price, image }); 
+    //   };
+
     const handleAddToCart = () => {
-        addToCart({ id, title, price, image }); 
-      };
+        if (stock > 0) {
+            addToCart({ id, title, price, image });
+        }
+    };
 
   return (
     <>
@@ -25,8 +31,20 @@ const Product = (props) => {
                 <div className='product-price'>Rs.{price}</div>
             </div>
 
-            <div className='add-to-cart-btn'>
-                <button className='addToCartBtn' onClick={handleAddToCart}>Add To Cart</button></div>
+            {/* <div className='add-to-cart-btn'>
+                <button className='addToCartBtn' onClick={handleAddToCart}>Add To Cart</button>
+            </div> */}
+               {stock > 0 ? (
+                    <div className='add-to-cart-btn'>
+                        <button className='addToCartBtn' onClick={handleAddToCart}>
+                            Add To Cart
+                        </button>
+                    </div>
+                ) : (
+                    <div className='out-of-stock'>
+                        <span>Out of Stock</span>
+                    </div>
+                )}
             </div>
     </>
   )

@@ -22,6 +22,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Phone",
         price:195000,
+        stock: 10,
     },
     {
         id:2,
@@ -30,6 +31,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Laptop",
         price:195000,
+        stock: 10,
     },
     {
         id:3,
@@ -38,6 +40,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Headphone",
         price:15000,
+        stock: 10,
     },
     {
         id:4,
@@ -46,6 +49,7 @@ const PRODUCTDATA = [
         desc:"AirPods are Apple's wireless earbuds designed for seamless integration with their ecosystem, offering a blend of convenience and high-quality audio. They feature quick pairing with Apple devices via Bluetooth, intuitive touch controls for managing calls and music playback, and access to Siri for voice commands. The sleek design includes a charging case that extends battery life and supports quick charging. With a focus on simplicity and functionality, AirPods provide a wireless listening experience ideal for daily use and active lifestyles.",
         category:"Airpods",
         price:35000,
+        stock: 10,
     },
     {
         id:5,
@@ -54,6 +58,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Phone",
         price:195000,
+        stock: 10,
     },
     {
         id:6,
@@ -62,6 +67,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"ipad",
         price:195000,
+        stock: 10,
     },
     {
         id:7,
@@ -70,6 +76,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Laptop",
         price:195000,
+        stock: 0,
     },
     {
         id:8,
@@ -78,6 +85,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Laptop",
         price:105000,
+        stock: 0,
     },
     {
         id:9,
@@ -86,6 +94,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Laptop",
         price:95000,
+        stock: 1,
     },
     {
         id:10,
@@ -94,6 +103,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Earphone",
         price:5000,
+        stock: 10,
     },
     {
         id:11,
@@ -102,6 +112,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Earphone",
         price:6000,
+        stock: 10,
     },
     {
         id:12,
@@ -110,6 +121,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Earphone",
         price:7000,
+        stock: 10,
     },
     {
         id:13,
@@ -118,6 +130,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Headphone",
         price:5000,
+        stock: 10,
     },
     {
         id:14,
@@ -126,6 +139,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"Headphone",
         price:5000,
+        stock: 10,
     },
     {
         id:15,
@@ -134,6 +148,7 @@ const PRODUCTDATA = [
         desc:"",
         category:"ipad",
         price:175000,
+        stock: 10,
     },
  
 ]
