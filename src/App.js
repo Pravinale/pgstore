@@ -47,13 +47,13 @@ const App = () => {
         <AuthProvider>
           <Router>
             <Routes>
-              <Route path="*" element={<Navigate to="/home" replace />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
               <Route
-                path="/home"
+                path="/"
                 element={<Layout><Home /></Layout>}
               />
               <Route
-                path="/home/:userid"
+                path="/:userid"
                 element={<Layout><Home /></Layout>}
               />
               <Route

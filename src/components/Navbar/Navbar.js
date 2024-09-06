@@ -30,7 +30,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         logout();
-        navigate('/home');
+        navigate('/');
     };
 
     const handleSearch = () => {
@@ -49,13 +49,13 @@ const Navbar = () => {
 
     const navigateToHome = () => {
         setSearchTerm(''); // Clear search term in context
-        navigate('/home');
+        navigate('/');
     };
 
     return (
         <>
             <div className='navbar'>
-                <Link to='/home' className='logo' onClick={navigateToHome}><img src={Logo} alt='logo' /></Link>
+                <Link to='/' className='logo' onClick={navigateToHome}><img src={Logo} alt='logo' /></Link>
 
                 <div className='search'>
                     <input
@@ -75,7 +75,7 @@ const Navbar = () => {
                     <div className={`navlinks ${menuOpen ? 'show' : ''}`}>
 
                             <div className='homw-about'>
-                                <li><Link to='/home' onClick={navigateToHome}>Home</Link></li>
+                                <li><Link to='/' onClick={navigateToHome}>Home</Link></li>
                                 <li><Link to='/about'>About Us</Link></li>
                             </div>
 
