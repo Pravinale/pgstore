@@ -1,67 +1,59 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './Product.css';
-import { CartItemContext } from '../contexts/cartItemContext';
-// import { useNavigate } from 'react-router-dom';
 import Wrapper from '../components/Wrapper/Wrapper';
+import { CartContext } from '../contexts/CartContext'
 
-const Product = (props) => {
-  const { id, title, price, image, stock } = props.propsData;
-  const { addToCart } = useContext(CartItemContext);
-  const [showDetails, setShowDetails] = useState(false);
-  // const navigate = useNavigate();
+const Product = ({ propsData }) => {
+    const { _id, title, price, image, stock } = propsData || {};
+    const [showDetails, setShowDetails] = useState(false);
+    const { addToCart } = useContext(CartContext);
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-  const handleAddToCart = () => {
-    if (stock > 0) {
-      addToCart({ id, title, price, image });
+    const handleProductClick = () => {
+        setShowDetails(true);
+    };
+
+    const closeDetails = () => {
+        console.log('Close button clicked');
+        setShowDetails(false);
+    };
+
+    if (!propsData) {
+        return <p>No product data available</p>;
     }
-  };
 
-  // const handleProductClick = () => {
-  //   navigate(`/product/${id}`);
-  // };
+    const handleAddToCart = () => {
+        addToCart(propsData);
+    };
 
-  const handleProductClick = () => {
-    setShowDetails(true);
-  };
+    return (
+        <>
+            <div className='product-card'>
+                <div className='product-img' onClick={handleProductClick}>
+                    <img src={`${BASE_URL}/${image}`} alt={title} /> {/* Display the image */}
+                </div>
+                <div className='product-content'>
+                    <div className='product-title'>{title}</div>
+                    <div className='product-price'>Rs.{price}</div>
+                </div>
+                {stock > 0 ? (
+                    <div className='add-to-cart-btn'>
+                        <button className='addToCartBtn' onClick={handleAddToCart}>
+                            Add To Cart
+                        </button>
+                    </div>
+                ) : (
+                    <div className='out-of-stock'>
+                        <span>Out of Stock</span>
+                    </div>
+                )}
+            </div>
 
-  const closeDetails = () => {
-    setShowDetails(false);
-  };
-
-  return (
-    <>
-      <div className='product-card' key={id} onClick={handleProductClick}>
-
-        <div className='product-img'>
-          <img src={image} alt='product' />
-        </div>
-
-        <div className='product-content'>
-          <div className='product-title'>{title}</div>
-          <div className='product-price'>Rs.{price}</div>
-        </div>
-
-        {stock > 0 ? (
-          <div className='add-to-cart-btn'>
-            <button className='addToCartBtn' onClick={(e) => {
-              e.stopPropagation(); // Prevent navigation on button click
-              handleAddToCart();
-            }}>
-              Add To Cart
-            </button>
-          </div>
-        ) : (
-          <div className='out-of-stock'>
-            <span>Out of Stock</span>
-          </div>
-        )}
-      </div>
-
-      {showDetails && (
-        <Wrapper productId={id} onClose={closeDetails} />
-      )}
-    </>
-  );
+            {showDetails && (
+                <Wrapper productId={_id} onClose={closeDetails} />
+            )}
+        </>
+    );
 };
 
 export default Product;

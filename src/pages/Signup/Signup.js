@@ -1,29 +1,53 @@
 import React, { useState } from 'react';
 import './Signup.css';
-import {Link} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 const SignUp = () => {
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
+
     const [username, setUsername] = useState('');
     const [phonenumber, setPhonenumber] = useState('');
     const [address, setAddress] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleSignUp = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
+    
         if (!username || !phonenumber || !address || !email || !password) {
             alert('Please fill in all fields');
             return;
         }
-        else {
-            alert('Sign Up Successful!');
-            setUsername('');
-            setPhonenumber('');
-            setAddress('');
-            setEmail('');
-            setPassword('');
+    
+        try {
+            const response = await axios.post(`${BASE_URL}/register`, {
+                username,
+                phonenumber,
+                address,
+                email,
+                password
+            });
+    
+            if (response.status === 200) {
+                alert('Account Created Successfully! Please check your email to activate your account.');
+                setUsername('');
+                setPhonenumber('');
+                setAddress('');
+                setEmail('');
+                setPassword('');
+                navigate('/login');
+            } else {
+                alert(response.data.message || 'Failed to create account. Please try again.');
+            }
+        } catch (err) {
+            console.error('Error during sign up:', err);
+            alert(err.response?.data?.message || 'An error occurred during sign up. Please try again.');
         }
     };
+    
 
     return (
         <div className='signup-container'>
@@ -32,10 +56,10 @@ const SignUp = () => {
 
                 <div className='form-body'>
                     <div className='form-content'>
-                        <h3>Userame</h3>
+                        <h3>Username</h3>
                         <input
                             type="text"
-                            placeholder="Userame"
+                            placeholder="Username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
@@ -44,7 +68,7 @@ const SignUp = () => {
                     <div className='form-content'>
                         <h3>Phone Number</h3>
                         <input
-                            type="number"
+                            type="text"
                             placeholder="Phone Number"
                             value={phonenumber}
                             onChange={(e) => setPhonenumber(e.target.value)}
@@ -82,12 +106,13 @@ const SignUp = () => {
                     </div>
                 </div>
 
-                <button type='submit'>Sign Up </button>
+                <button type='submit'>Sign Up</button>
 
-                <div className='haveaccount'>Already have an account? <span><Link to='/login' >Login</Link></span></div>
+                <div className='haveaccount'>Already have an account? <span><Link to='/login'>Login</Link></span></div>
             </form>
         </div>
     );
 };
 
 export default SignUp;
+

@@ -1,71 +1,84 @@
-
-
-import React, { useContext, useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import { SearchContext } from '../../contexts/searchContext';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import Product from '../../Products/Product';
 import './CategoryResults.css';
-import { CartContext } from '../../contexts/showCartContext';
-import Cart from '../Cart/Cart';
 
 const CategoryResults = () => {
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [priceRange, setPriceRange] = useState([0, 300000]); // [minPrice, maxPrice]
   const { category } = useParams();
-  const navigate = useNavigate(); // Use navigate hook
-  const { filteredProducts, resetProducts } = useContext(SearchContext);
-  const [categoryProducts, setCategoryProducts] = useState([]);
-  const [priceRange, setPriceRange] = useState(0);
-  const [filteredByPrice, setFilteredByPrice] = useState([]);
-  const { showCart } = useContext(CartContext);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
-    resetProducts();
-  }, [resetProducts]);
+    // Fetch categories from the backend
+    axios.get(`${BASE_URL}/categories`)
+      .then(response => {
+        // Assuming response.data is an array of objects, e.g., [{_id: '1', name: 'Laptop'}, {...}]
+        const categoryNames = response.data.map(cat => cat.name);
+        setCategories(['All', ...categoryNames]); // Add 'All' option to the categories
+      })
+      .catch(error => {
+        console.error('Error fetching categories:', error);
+      });
+
+    // Fetch products from the backend
+    axios.get(`${BASE_URL}/products`)
+      .then(response => {
+        if (response.data) {
+          setProducts(response.data);
+          // Set the selected category and filter products
+          setSelectedCategory(category || 'All');
+          filterProducts(response.data, category || 'All', priceRange);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+        setProducts([]);
+        setFilteredProducts([]);
+      });
+  }, [category]);
 
   useEffect(() => {
-    // Filter products based on category
-    const filtered = filteredProducts.filter(product => product.category.toLowerCase() === category.toLowerCase());
-    setCategoryProducts(filtered);
-    setFilteredByPrice(filtered); // Initialize filteredByPrice
-  }, [category, filteredProducts, resetProducts]);
+    // Filter products whenever the category or price range changes
+    filterProducts(products, selectedCategory, priceRange);
+  }, [selectedCategory, priceRange, products]);
 
-  useEffect(() => {
-    // Apply price filter
-    if (priceRange === 0) {
-      setFilteredByPrice(categoryProducts); // Display all products within category
-    } else {
-      const filteredPrice = categoryProducts.filter(product => product.price <= priceRange);
-      setFilteredByPrice(filteredPrice);
-    }
-  }, [priceRange, categoryProducts]);
-
-  const handleCategoryChange = (e) => {
-    const selectedCategory = e.target.value;
-    if (selectedCategory === 'All') {
-      navigate('/'); // Navigate to home if 'All' is selected
-    } else {
-      navigate(`/category/${selectedCategory}`); // Navigate to selected category
-    }
+  const filterProducts = (productsList, category, priceRange) => {
+    const [minPrice, maxPrice] = priceRange;
+    const filtered = productsList
+      .filter(product =>
+        (category === 'All' || product.category === category) &&
+        product.price >= minPrice &&
+        product.price <= maxPrice
+      );
+    setFilteredProducts(filtered);
   };
 
-  const handlePriceChange = (e) => {
-    const newPriceRange = parseInt(e.target.value);
-    setPriceRange(newPriceRange);
+  const handleCategoryChange = (e) => {
+    const newCategory = e.target.value;
+    setSelectedCategory(newCategory);
+    filterProducts(products, newCategory, priceRange); // Filter products immediately
+  };
+
+  const handlePriceRangeChange = (e) => {
+    const newMaxPrice = parseInt(e.target.value);
+    setPriceRange([priceRange[0], newMaxPrice]); // Update the max price in the range
+    filterProducts(products, selectedCategory, [priceRange[0], newMaxPrice]); // Filter products immediately
   };
 
   return (
     <div className='category-container'>
-      <div className='right-content'>
-        <h3>Filters</h3>
-        <div className='category'>
-          <h1>Category</h1>
-          <select value={category} onChange={handleCategoryChange}>
-            {/* <option value='All'>All</option> */}
-            <option value='Laptop'>Laptop</option>
-            <option value='Phone'>Phone</option>
-            <option value='ipad'>ipad</option>
-            <option value='Airpods'>Airpods</option>
-            <option value='Earphone'>Earphone</option>
-            <option value='Headphone'>Headphone</option>
+      <div className='category-right-content'>
+        <div className='category-filter'>
+          <h1>Categories</h1>
+          <select value={selectedCategory} onChange={handleCategoryChange}>
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
           </select>
         </div>
 
@@ -73,31 +86,26 @@ const CategoryResults = () => {
           <h1>Price Range</h1>
           <input
             type='range'
-            value={priceRange}
-            onChange={handlePriceChange}
             min='0'
             max='300000' // Adjust max value as needed
+            value={priceRange[1]} // Bind to the max price in the range
+            onChange={handlePriceRangeChange}
           />
-          <h2>Rs.{priceRange}</h2>
+          <h2>Max Price: Rs.{priceRange[1]}</h2> {/* Display selected max price */}
         </div>
       </div>
 
       <div className="category-page">
-        <h1>{category} Products</h1>
         <div className="category-products">
-          {filteredByPrice.length > 0 ? (
-            filteredByPrice.map(product => (
-              <Product key={product.id} propsData={product} />
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map(product => (
+              <Product key={product._id} propsData={product} />
             ))
           ) : (
-            <div>No products found in this category.</div>
+            <p>No products found in this category.</p>
           )}
         </div>
       </div>
-
-      <div className={`cartPage ${showCart ? 'visible' : 'hidden'}`}>
-          <Cart />
-    </div>
     </div>
   );
 };

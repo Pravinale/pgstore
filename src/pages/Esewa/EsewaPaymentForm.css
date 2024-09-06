@@ -1,0 +1,34 @@
+ .esewa-container{
+    padding: 20rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.esewa-container form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid;
+    width: 7rem;
+}
+
+.esewa-container button{
+    position: absolute;
+    top: 25rem;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    width: 5rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    
+}
+
+.esewa-container button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -1,9 +1,18 @@
 .cart-container{
+    position: fixed;
+    top: 5rem;
+    right: 0rem;
+    width: 30%;
+    height: 80vh;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
     padding: 0 1rem; 
     display: flex;
     flex-direction: column;
-    height: 100%;
     margin-bottom: 1rem;
+
 }
 
 .cart-head{
@@ -66,4 +75,46 @@
 
 .checkout .checkout-btn:hover{
     background-color: #0056b3; 
+}
+
+
+
+
+@media (max-width: 1200px) {
+    .cart-container{
+        width: 35%;
+        height: 80vh;
+    }
+
+}
+
+@media (max-width: 850px) {
+    .cart-container{
+        width: 50%;
+        height: 80vh;
+    }
+
+}
+
+@media (max-width: 650px) {
+    .cart-container{
+        width: 60%;
+        height: 80vh;
+    }
+
+}
+@media (max-width: 500px) {
+    .cart-container{
+        width: 90%;
+        height: 80vh;
+    }
+
+}
+
+@media (max-width: 350px) {
+    .cart-container{
+        width: 100%;
+        height: 80vh;
+    }
+
 }

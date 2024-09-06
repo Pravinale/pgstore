@@ -1,0 +1,17 @@
+.my-orders-container{
+    padding: 10rem;
+}
+
+.order-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.order-item h2 {
+    margin: 0;
+}
+
+.order-item ul {
+    padding-left: 20px;
+}

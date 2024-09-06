@@ -59,13 +59,18 @@
 }
 
 .form button{
-    background-color: lightblue;
+    background-color: #007BFF;
     border-radius: 5px;
     padding: 3px;
     margin-top: 2rem;
     width: 30%;
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
+    color: white;
+}
+
+.form button:hover{
+    background-color: #0056b3;
 }
 
 .haveaccount{

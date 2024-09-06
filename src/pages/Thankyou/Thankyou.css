@@ -1,0 +1,24 @@
+.thankyou-container{
+    padding: 10rem;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.thankyou-container button{
+    background-color: #007BFF;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 2rem;
+    width: auto;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.thankyou-container button:hover{
+    background-color: #0056b3;
+}

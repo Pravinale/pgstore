@@ -6,11 +6,10 @@ const Wrapper = ({ productId, onClose }) => {
   return (
     <div className="single-product-wrapper">
       <div className="single-product-content">
-        <SingleProductDetails id={productId} />
-        
+        <SingleProductDetails id={productId} />     
       </div>
       <div className='close-btn'>
-      <button onClick={onClose}>Close</button>
+        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );

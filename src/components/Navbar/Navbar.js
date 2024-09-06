@@ -1,124 +1,147 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
-import { CartContext } from '../../contexts/showCartContext';
-import { CartItemContext } from '../../contexts/cartItemContext';
-import { SearchContext } from '../../contexts/searchContext';
 import { FaCartShopping, FaBars } from 'react-icons/fa6';
 import { FaUserCircle } from 'react-icons/fa';
 import Logo from '../../assets/logo.png';
-import { UserContext } from '../../contexts/userContext';
+import { AuthContext } from '../../contexts/AuthContext';
+import { useSearch } from '../../contexts/Search';
+import { CartContext } from '../../contexts/CartContext'; // Import CartContext
+import Cart from '../../pages/Cart/Cart';
 
 const Navbar = () => {
-  const { toggleCart } = useContext(CartContext);
-  const { getTotalQuantity } = useContext(CartItemContext);
-  const { handleSearch } = useContext(SearchContext);
-  const { user, logout } = useContext(UserContext);
-  const [searchInput, setSearchInput] = useState('');
-  const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [cartOpen, setCartOpen] = useState(false);
+    const [localSearchTerm, setLocalSearchTerm] = useState('');
+    const navigate = useNavigate();
+    const { isAuthenticated, user, logout } = useContext(AuthContext);
+    const { setSearchTerm } = useSearch();
+    const { cart } = useContext(CartContext); // Access the cart from CartContext
 
-  const handleSearchChange = (e) => {
-    setSearchInput(e.target.value);
-  };
+    const totalItems = cart.reduce((total, product) => total + product.quantity, 0); // Calculate total number of items
 
-  const handleSearchClick = () => {
-    if (searchInput.trim() !== '') {
-      handleSearch(searchInput);
-      setSearchInput('');
-      navigate('/search-results');
-    }
-  };
+    const handleMenuToggle = () => {
+        setMenuOpen(!menuOpen);
+    };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSearchClick();
-    }
-  };
+    const handleCartToggle = () => {
+        setCartOpen(!cartOpen);
+    };
 
-  const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
+    const handleLogout = () => {
+        logout();
+        navigate('/home');
+    };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
+    const handleSearch = () => {
+        if (localSearchTerm.trim()) { // Only execute search if term is not empty
+            setSearchTerm(localSearchTerm); // Update search term in context
+            navigate('/search', { state: { searchTerm: localSearchTerm } });
+        }
+        setLocalSearchTerm(''); // Clear the search input field
+    };
 
-  return (
-    <>
-      <div className='navbar'>
-        <Link to='/' className='logo'><img src={Logo} alt='logo' /></Link>
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch(); // Trigger search when Enter key is pressed
+        }
+    };
 
-        <div className='search'>
-          <input
-            className='search-input'
-            type='text'
-            placeholder='Search items'
-            value={searchInput}
-            onChange={handleSearchChange}
-            onKeyDown={handleKeyPress}
-          />
-          <button className='search-btn' onClick={handleSearchClick}>Search</button>
-        </div>
+    const navigateToHome = () => {
+        setSearchTerm(''); // Clear search term in context
+        navigate('/home');
+    };
 
-        <div className='right-nav'>
-          <div className={`navlinks ${menuOpen ? 'show' : ''}`}>
-            <li><Link to='/'>Home</Link></li>
-            <li><Link to='/about'>About Us</Link></li>
-            {user && user.role === 'admin' && (
-              <li><Link to='/admin'>Admin</Link></li>
+    return (
+        <>
+            <div className='navbar'>
+                <Link to='/home' className='logo' onClick={navigateToHome}><img src={Logo} alt='logo' /></Link>
+
+                <div className='search'>
+                    <input
+                        className='search-field'
+                        type='text'
+                        placeholder='Search items'
+                        value={localSearchTerm}
+                        onChange={(e) => setLocalSearchTerm(e.target.value)}
+                        onKeyDown={handleKeyDown} // Add keydown event handler
+                    />
+                    <button className='search-btn' onClick={handleSearch}>
+                        Search
+                    </button>
+                </div>
+
+                <div className='right-nav'>
+                    <div className={`navlinks ${menuOpen ? 'show' : ''}`}>
+
+                            <div className='homw-about'>
+                                <li><Link to='/home' onClick={navigateToHome}>Home</Link></li>
+                                <li><Link to='/about'>About Us</Link></li>
+                            </div>
+
+                        {isAuthenticated ? (
+                            <div className='user-section'>
+                                {user.role === 'admin' && (
+                                        <li><Link to='/admin' >Admin</Link></li>
+                                )}
+                                <li><Link to='/dashboard'>Dashboard</Link></li>
+                                <div className='logout'>
+                                    <FaUserCircle className='user-icon' />
+                                    <button onClick={handleLogout}>Logout</button>
+
+                                </div>
+                            </div>
+                        ) : (
+                            <div className='signup-login'>
+                                <li><Link to='/signup'>Sign Up</Link></li>
+                                <li><Link to='/login'>Login</Link></li>
+                            </div>
+                        )}
+
+                    </div>
+
+                    <div className='mobile-menu-icon' onClick={handleMenuToggle}>
+                        <FaBars />
+                    </div>
+
+                    <div className='cart-icon'>
+                        <button className='cart' onClick={handleCartToggle}>
+                            <i><FaCartShopping /></i>
+                            {totalItems > 0 && (
+                                <span className='cart-count'>{totalItems}</span> // Display total items as a badge
+                            )}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {menuOpen && (
+                <div className='mobile-nav'>
+                    <li><Link to='/home' onClick={navigateToHome}>Home</Link></li>
+                    <li><Link to='/about' onClick={handleMenuToggle}>About Us</Link></li>
+                    {isAuthenticated ? (
+                        <div className='user-section'>
+                            {user.role === 'admin' && (
+                                <li><Link to='/admin' onClick={handleMenuToggle}>Admin</Link></li>
+                            )}
+                            <li><Link to='/dashboard'>Dashboard</Link></li>
+                                <div className='logout'>
+                                    <FaUserCircle className='user-icon' />
+                                    <button onClick={handleLogout}>Logout</button>
+                                </div>
+                        </div>
+                    ) : (
+                        <div className='signup-login'>
+                            <li><Link to='/signup' onClick={handleMenuToggle}>Sign Up</Link></li>
+                            <li><Link to='/login' onClick={handleMenuToggle}>Login</Link></li>
+                        </div>
+                    )}
+                </div>
             )}
 
-            {user ? (
-            <div className='user-section'>
-              <FaUserCircle className='user-icon' />
-              <button onClick={handleLogout}>Logout</button>
-            </div>
-          ) : (
-            <div className='signup-login'>
-              <li><Link to='/signup'>Sign Up</Link></li>
-              <li><Link to='/login'>Login</Link></li>
-            </div>
-          )}
-          </div>
-
-
-
-          <div className='mobile-menu-icon' onClick={handleMenuToggle}>
-            <FaBars />
-          </div>
-
-          <div className='cart-icon'>
-            <button className='cart' onClick={toggleCart}>
-              <i><FaCartShopping /></i>
-              <span className='total-quantity'>{getTotalQuantity()}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-      {menuOpen && (
-        <div className='mobile-nav'>
-          <li><Link to='/' onClick={handleMenuToggle}>Home</Link></li>
-          <li><Link to='/about' onClick={handleMenuToggle}>About Us</Link></li>
-          {user && user.role === 'admin' && (
-            <li><Link to='/admin' onClick={handleMenuToggle}>Admin</Link></li>
-          )}
-            {user ? (
-            <div className='user-section'>
-              <FaUserCircle className='user-icon' />
-              <button onClick={handleLogout}>Logout</button>
-            </div>
-          ) : (
-            <div className='signup-login'>
-              <li><Link to='/signup'>Sign Up</Link></li>
-              <li><Link to='/login'>Login</Link></li>
-            </div>
-          )}
-        </div>
-      )}
-    </>
-  );
+            {cartOpen && <Cart />}
+        </>
+    );
 };
 
 export default Navbar;

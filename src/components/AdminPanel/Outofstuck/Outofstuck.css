@@ -1,0 +1,47 @@
+.Outofstuck-container{
+    padding-top: 10rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
+    overflow-y: hidden;
+    width: 100%;
+}
+
+.Outofstuck-container h1{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+
+.back-button {
+    background-color: #007bff; /* Customize the background color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Adjust spacing as needed */
+}
+
+.back-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.Outofstuck-container td input{
+    width: 100%;
+
+}
+
+
+@media (max-width: 1500px) {
+    .Outofstuck-container{
+        padding: 10rem 5rem;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .Outofstuck-container{
+        padding: 10rem 0.3rem;
+    }
+  }

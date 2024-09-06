@@ -1,13 +1,18 @@
 
 .product-card {
-    border-radius: 10px;
+    border-radius: 5px;
     min-height: auto;
     width: 13rem;
     display: flex;
     flex-direction: column;
     padding: 1rem; 
-    box-shadow: 0px 0px 22px -10px;
+    cursor: pointer;
+    transition: 0.5s all ease;
+    border: 1px solid rgb(201, 201, 201);
+}
 
+.product-card:hover{
+    transform: scale(1.04);
 }
 
 .product-img img{

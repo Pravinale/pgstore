@@ -1,6 +1,6 @@
 .home{
-    padding: 0rem 10rem 0rem 10rem;
-    width: 100vw;
+    padding: 0rem 0rem 0rem 0rem;
+    width: 100%;
 }
 
 .heading{
@@ -11,16 +11,16 @@
 .home-content{
     display: flex;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
 }
 
 .right-content{
-    width: 20%;
-    box-shadow: 0px 0px 22px -10px;
-    height: 50%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 6rem;
+    border-radius: 10px ;
+
 }
 
 
@@ -42,11 +42,11 @@
  
 /* ................For Category section.....................*/
   .category{
+    margin-left: 7rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 18px;
-    margin-bottom: 10px;
     width: 100%;
     font-size: 16px;
     border: none;
@@ -57,6 +57,17 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
+  .category button{
+    height: 2.8rem;
+    width: 10rem;
+  }
+  .category h1{
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 0 5px;
+    cursor: pointer;
+  }
+
   .category select {
     width: 90%;
     padding: 4px 15px;
@@ -64,37 +75,29 @@
     border: 2px solid #ccc;
     border-radius: 4px;
     outline: none;
-    transition: border-color 0.3s;
+    transition: 0.3s;
     margin-bottom: 2rem;
 
+  }
+
+  .category button{
+    border: 1px solid;
+    border-radius: 3px;
+    padding: 3px; 
+  }
+
+  .category button:hover{
+    background-color: #e5e8eb;
+    
   }
   
   .right-content select:focus {
     border-color: #007BFF;
   }
 
-
-    /* .right-content .reset-btn {
-    display: block;
-    width: 90%;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #ff4c4c;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .right-content .reset-btn:hover {
-    background-color: #d43f3f;
-  }
-   */
 /*........Left Content....................................*/
 .left-content{
-    width: 80%;  
+    width: 100%;  
 
 }
 
@@ -113,16 +116,17 @@
   grid-template-columns: repeat(4, 1fr); 
   gap: 1rem;
   justify-items: center;
+  padding: 0rem 5rem;
 }
 
 .all-product-section h1{
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 600;
   margin-top: 3rem;
-  margin-bottom: 1rem;
-  margin-left: 0.5rem;
+  margin-bottom: 2rem;
   color: rgb(255, 104, 4);
+  text-align: center;
 }
 
 /*.......................... Cart Page.............................*/
@@ -259,10 +263,6 @@
 
 @media (max-width: 550px) {
 
-  .home{
-    padding: 0rem 0rem 0rem 0rem;
-  }
-
   .home-content{
     display: flex;
     flex-direction: column;
@@ -273,7 +273,6 @@
 .right-content{
   width: 50%;
   height: auto;
-  margin-top: 2rem;
 }
 
   .top-sell-products{

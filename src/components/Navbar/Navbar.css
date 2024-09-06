@@ -4,15 +4,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: antiquewhite;
-    height: 5rem;
-    position: fixed;
+    background-color: rgb(238, 237, 237);
+    height: 6rem;
+    /* position: fixed; */
     z-index: 3;
   }
   
   .right-nav {
     display: flex;
-    width: 35%;
+    width: 50%;
     justify-content: space-between;
     align-items: center;
   }
@@ -20,6 +20,7 @@
   .navlinks {
     display: flex;
     gap: 1rem;
+    padding-left: 5rem;
   }
   
   .navlinks li {
@@ -58,10 +59,11 @@
     align-items: center;
     justify-content: center;
     margin: 20px 0;
-    width: 50%;
+    padding-left: 5rem;
+    width: 40%;
   }
   
-  .search-input {
+  .search input {
     padding: 10px 15px;
     font-size: 16px;
     border: 2px solid #ccc;
@@ -72,7 +74,7 @@
     width: 100%;
   }
   
-  .search-input:focus {
+  .search input:focus {
     border-color: #007BFF;
   }
   
@@ -94,6 +96,13 @@
     border-color: #0056b3;
   }
   
+  .homw-about{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+  }
   .signup-login{
     display: flex;
     gap: 0.5rem;
@@ -110,14 +119,22 @@
     justify-content: center;
     align-items: center;
     font-weight: 600;
+    gap: 0.5rem;   
   }
 
+  .logout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .user-section button:hover{
     color: red;
   }
 
   .cart-icon {
     display: flex;
+    position: relative;
+
   }
   
   .cart-icon button {
@@ -130,21 +147,16 @@
     font-size: 2rem;
   }
   
-  .total-quantity {
-    position: relative;
-    top: -10px;
-    right: 10px;
-    background-color: red;
-    color: white;
+  .cart-count {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    color: red;
     border-radius: 50%;
-    padding: 2px 4px;
-    font-size: 12px;
+    padding: 2px 6px;
+    font-size: 1rem;
     font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
+}
   .mobile-menu-icon{
     display: none;
   }
@@ -197,6 +209,13 @@
       z-index: 3;
     }
   }
+
+    @media (max-width: 800px) {
+      .navlinks {
+        padding-left: 2rem;
+      }
+      
+      }
   
   /* For devices with a screen width of 600px or less */
   @media (max-width: 720px) {
@@ -255,6 +274,11 @@
     .mobile-nav .user-section button:hover{
       color: red;
     }
+
+    .user-section{
+      flex-direction: column;
+    }
+
   }
   
   /* For devices with a screen width of 350px or less */

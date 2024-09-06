@@ -1,0 +1,55 @@
+.allProduct-container{
+    padding: 10rem;
+    overflow-y: hidden;
+    width: 100%;
+}
+
+.allProduct-container h1{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+
+.back-button {
+    background-color: #007bff; /* Customize the background color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Adjust spacing as needed */
+}
+
+.back-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+
+.edit-delete button{
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-delete button span{
+    color: red;
+}
+
+
+.allProduct-container td input{
+    width: 100%;
+
+}
+
+@media (max-width: 1500px) {
+    .allProduct-container{
+        padding: 10rem 5rem;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .allProduct-container{
+        padding: 10rem 0.3rem;
+    }
+  }
